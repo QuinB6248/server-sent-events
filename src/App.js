@@ -9,7 +9,8 @@ class App extends Component {
     messages: [],
     message: ''
   }
-  source = new EventSource('http://localhost:5000/stream')
+  url = 'https://young-anchorage-56792.herokuapp.com'
+  source = new EventSource(`${this.url}/stream`)
 // //handle new events
 //   onEvent = (event) => {
 //     const { data } = event
@@ -34,14 +35,14 @@ class App extends Component {
     const { message } = this.state
     this.setState({message: ''})
     request
-      .post('http://localhost:5000/message')
+      .post(`${this.url}/message`)
       .send({message})
       .then(response => {
         console.log('responsetest: ', response)
       })
       .catch(console.error)
   }
-  
+
   render() {
     const messages =
       this
