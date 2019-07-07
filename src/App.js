@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import * as request from 'superagent'
 import { connect} from 'react-redux'
-import { onEvent } from './actions/messages'
-
+import { fetchMessages } from './actions/messages'
 
 class App extends Component {
   state = {
     messages: [],
     message: ''
   }
-  url = 'https://young-anchorage-56792.herokuapp.com'
+
+  url = 'http://localhost:5000' //'https://young-anchorage-56792.herokuapp.com'
+
   source = new EventSource(`${this.url}/stream`)
 // //handle new events
 //   onEvent = (event) => {
@@ -19,8 +20,9 @@ class App extends Component {
 //     this.setState({messages}) //overwrite messages from the state
 //   }
   //Connect the source to the handler componentDidMount
+
   componentDidMount () {
-    this.source.onmessage = this.props.onEvent //when source receives new event pass it to onEvent
+    this.source.onmessage = this.props.fetchMessages //when source receives new event pass it to onEvent
   }
 
   onChange = (event) => {
@@ -34,6 +36,7 @@ class App extends Component {
     event.preventDefault()
     const { message } = this.state
     this.setState({message: ''})
+    
     request
       .post(`${this.url}/message`)
       .send({message})
@@ -44,25 +47,25 @@ class App extends Component {
   }
 
   render() {
+    console.log('this.props test:', this.props)
     const messages =
       this
         .props //action
         .messages
-        .map((message, index) => <p key={index}>{message}</p>)
+        .map((message, index) => <p key={index}>{message.message}</p>)
 
     return <main>
-              <form onSubmit={this.onSubmit}>
-                <input
-                  value={this.state.message}
-                  onChange={this.onChange}
-                  type='text'
-                />
-                <button>send</button>
-              </form>
-                {messages}
-            </main>
-      
-    
+      <form onSubmit={this.onSubmit}>
+        <input
+          value={this.state.message}
+          onChange={this.onChange}
+          type='text'
+        />
+        <button>send</button>
+      </form>
+
+      {messages}
+    </main>
   }
 }
 
@@ -72,6 +75,6 @@ function mapStateToProps (state) {
     messages
   }
 }
-const mapDispatchToProps = {onEvent}
+const mapDispatchToProps = {fetchMessages}
 
 export default connect(mapStateToProps,mapDispatchToProps)(App)

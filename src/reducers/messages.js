@@ -1,10 +1,10 @@
-import {EVENT} from '../actions/messages'
+import { MESSAGES_FETCHED } from '../actions/messages'
 
 const initialState = []
 
 export default function messages (state = initialState, {type, payload}) {
   switch (type) {
-    case EVENT:
+    case MESSAGES_FETCHED:
       return payload
     default:
       return state
