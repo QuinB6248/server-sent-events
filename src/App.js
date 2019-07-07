@@ -9,7 +9,7 @@ class App extends Component {
     message: ''
   }
 
-  url = 'http://localhost:5000' //'https://young-anchorage-56792.herokuapp.com'
+  url = 'https://young-anchorage-56792.herokuapp.com'//'http://localhost:5000' 
 
   source = new EventSource(`${this.url}/stream`)
 // //handle new events

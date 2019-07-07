@@ -1,6 +1,6 @@
-import request from 'superagent'
+//import request from 'superagent'
 
-const url = 'http://localhost:5000' //'https://young-anchorage-56792.herokuapp.com'
+const url =  'https://young-anchorage-56792.herokuapp.com' //'http://localhost:5000'
 
 
 export const MESSAGES_FETCHED = 'MESSAGES_FETCHED'
